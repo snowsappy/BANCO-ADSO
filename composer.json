@@ -1,0 +1,15 @@
+{
+    "name": "aprendiz/bancoadso",
+    "autoload": {
+        "psr-4": {
+            "Aprendiz\\Bancoadso\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "linda",
+            "email": "lindatencio12@gmail.com"
+        }
+    ],
+    "require": {}
+}
