@@ -10,6 +10,7 @@ class ComposerStaticInit57e9856057328555e75c87922a3d5e9e
         'A' =>
         array (
             'Aprendiz\\Bancoadso\\' => 19,
+            'App\\' => 4,
         ),
     );
 
@@ -18,9 +19,25 @@ class ComposerStaticInit57e9856057328555e75c87922a3d5e9e
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
+        'App\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static $classMap = array (
+        'App\\Controladores\\CuentaControlador' => __DIR__ . '/../..' . '/src/controllers/cuentaControlador.php',
+        'App\\Controladores\\SesionControlador' => __DIR__ . '/../..' . '/src/controllers/iniciosesion.php',
+        'App\\Core\\Conexion' => __DIR__ . '/../..' . '/src/core/Conexion.php',
+        'App\\Models\\Clientes\\Clientes' => __DIR__ . '/../..' . '/src/Models/Clientes.php',
+        'App\\Models\\Cuentas\\Cuentas' => __DIR__ . '/../..' . '/src/Models/Cuentas.php',
+        'App\\Models\\Retiros\\Retiros' => __DIR__ . '/../..' . '/src/Models/Retiros.php',
+        'App\\Models\\Transferencias\\Transferencias' => __DIR__ . '/../..' . '/src/Models/Transferencias.php',
+        'App\\Models\\Usuarios' => __DIR__ . '/../..' . '/src/Models/Usuarios.php',
+        'App\\Repositories\\UsuarioRepo' => __DIR__ . '/../..' . '/src/repositories/usuariorepo.php',
+        'App\\Repositorios\\CuentaRepositorio' => __DIR__ . '/../..' . '/src/repositories/cuentarepositorio.php',
+        'App\\Services\\UsuarioServicio' => __DIR__ . '/../..' . '/src/services/Usuarioservi.php',
+        'App\\Servicios\\CuentaServicio' => __DIR__ . '/../..' . '/src/services/cuentaservicio.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 

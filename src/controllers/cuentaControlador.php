@@ -20,7 +20,7 @@ class CuentaControlador
         }
 
         if (!isset($_SESSION['usuario_id'])) {
-            header("Location: /BancoADSO/vistas/login.php");
+            header("Location: /BancoADSO/views/login.php");
             exit;
         }
 
@@ -30,10 +30,10 @@ class CuentaControlador
 
         if ($cuenta === false) {
             $mensaje = "No tienes una cuenta registrada.";
-            require_once __DIR__ . '/../../vistas/saldo.php';
+            require_once __DIR__ . '/../../views/saldo.php';
             return;
         }
 
-        require_once __DIR__ . '/../../vistas/saldo.php';
+        require_once __DIR__ . '/../../views/saldo.php';
     }
 }

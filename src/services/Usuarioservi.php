@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Servicios\usuarios;
 
 use App\Repositories\UsuarioRepo;
 

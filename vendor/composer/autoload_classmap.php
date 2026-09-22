@@ -6,5 +6,17 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controladores\\CuentaControlador' => $baseDir . '/src/controllers/cuentaControlador.php',
+    'App\\Controladores\\SesionControlador' => $baseDir . '/src/controllers/iniciosesion.php',
+    'App\\Core\\Conexion' => $baseDir . '/src/core/Conexion.php',
+    'App\\Models\\Clientes\\Clientes' => $baseDir . '/src/Models/Clientes.php',
+    'App\\Models\\Cuentas\\Cuentas' => $baseDir . '/src/Models/Cuentas.php',
+    'App\\Models\\Retiros\\Retiros' => $baseDir . '/src/Models/Retiros.php',
+    'App\\Models\\Transferencias\\Transferencias' => $baseDir . '/src/Models/Transferencias.php',
+    'App\\Models\\Usuarios' => $baseDir . '/src/Models/Usuarios.php',
+    'App\\Repositories\\UsuarioRepo' => $baseDir . '/src/repositories/usuariorepo.php',
+    'App\\Repositorios\\CuentaRepositorio' => $baseDir . '/src/repositories/cuentarepositorio.php',
+    'App\\Services\\UsuarioServicio' => $baseDir . '/src/services/Usuarioservi.php',
+    'App\\Servicios\\CuentaServicio' => $baseDir . '/src/services/cuentaservicio.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );

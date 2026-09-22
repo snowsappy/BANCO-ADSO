@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Aprendiz\\Bancoadso\\' => array($baseDir . '/src'),
+    'App\\' => array($baseDir . '/src'),
 );

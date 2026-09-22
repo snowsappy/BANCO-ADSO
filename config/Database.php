@@ -8,7 +8,7 @@ class Conexion
 {
     private static ?PDO $instancia = null;
 
-    // constructor privado: nadie puede hacer "new Conexion()" desde afuera
+    
     private function __construct()
     {
     }

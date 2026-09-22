@@ -2,24 +2,18 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Nucleo\Conexion;
-use App\Repositorios\CuentaRepositorio;
-use App\Servicios\CuentaServicio;
-use App\Controladores\CuentaControlador;
+use App\Repositories\UsuarioRepo;
+use App\Servicios\usuarios\UsuarioServicio;
+use App\Controladores\SesionControlador;
 
-$conexion = new Conexion();
-
-$pdo = $conexion->getConexion();
-
-if (isset($_GET['accion']) && $_GET['accion'] === 'saldo') {
-
-    $repositorio = new CuentaRepositorio($pdo);
-
-    $servicio = new CuentaServicio($repositorio);
-
-    $controlador = new CuentaControlador($servicio);
-
-    $controlador->consultarSaldo();
-
-    exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	$conexion = new App\Core\Conexion();
+	$pdo = $conexion->getConexion();
+	$repositorio = new UsuarioRepo($pdo);
+	$servicio = new UsuarioServicio($repositorio);
+	$controlador = new SesionControlador($servicio);
+	$controlador->iniciar();
+	exit;
 }
+
+require_once __DIR__ . '/../views/login.php';

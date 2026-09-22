@@ -45,7 +45,7 @@ function escapar(string $texto): string
 
     <?php endif; ?>
 
-    <a href="/BancoADSO/vistas/panel.php">
+    <a href="/BancoADSO/views/panel.php">
         Volver al panel
     </a>
 
