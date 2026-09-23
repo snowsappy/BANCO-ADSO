@@ -15,26 +15,20 @@ class SesionControlador
 
     public function iniciar()
     {
-        $correo = $_POST['correo'];
+        $numeroCuenta = $_POST['numero_cuenta'];
         $clave = $_POST['clave'];
 
-        $usuario = $this->servicio->iniciarSesion($correo, $clave);
+        $usuario = $this->servicio->iniciarSesion($numeroCuenta, $clave);
 
         if ($usuario === false) {
-            echo "Correo o contraseña incorrectos";
+            echo "Número de cuenta o contraseña incorrectos";
             return;
         }
 
-        // Iniciar la sesión
         session_start();
 
-        // Regenerar el identificador por seguridad
-        session_regenerate_id(true);
-
-        // Guardar información del usuario
         $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['usuario_nombre'] = $usuario['nombre'];
-        $_SESSION['usuario_correo'] = $usuario['correo'];
+        $_SESSION['numero_cuenta'] = $usuario['numero_cuenta'];
 
         echo "Sesión iniciada correctamente";
     }

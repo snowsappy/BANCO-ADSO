@@ -11,14 +11,17 @@ class UsuarioRepo{
         $this->conexion = $conexion;
     }
 
-    public function buscarPorCorreo(string $correo){
-
-        $sql = "SELECT * FROM usuarios WHERE correo = ?";
+    public function buscarPorNumeroCuenta(string $numeroCuenta)
+    {
+        $sql = "SELECT usuarios.*, cuentas.numero_cuenta, usuarios.clave_hash AS clave
+                FROM usuarios
+                INNER JOIN cuentas ON cuentas.id = usuarios.cuenta_id
+                WHERE cuentas.numero_cuenta = ?";
 
         $consulta = $this->conexion->prepare($sql);
 
-        $consulta->execute([$correo]);
+        $consulta->execute([$numeroCuenta]);
 
         return $consulta->fetch(PDO::FETCH_ASSOC);
-}
+    }
 }

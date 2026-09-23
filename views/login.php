@@ -11,8 +11,8 @@
 
     <form method="POST" action="../public/index.php">
 
-        <label>Correo:</label>
-        <input type="email" name="correo" required>
+        <label>Número de cuenta:</label>
+        <input type="text" name="numero_cuenta" required>
 
         <br><br>
 

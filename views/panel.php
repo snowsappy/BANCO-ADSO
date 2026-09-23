@@ -7,4 +7,4 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-echo "Bienvenido " . $_SESSION['usuario_nombre'];
+echo "Bienvenido, cuenta " . $_SESSION['numero_cuenta'];
