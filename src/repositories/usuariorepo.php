@@ -1,12 +1,12 @@
 <?php
 namespace App\Repositories;
 
-use PDO;
 
+use App\Core\Conexion;
 class UsuarioRepo{
-    private PDO $conexion;
+    private Conexion $conexion;
 
-    public function __construct(PDO $conexion)
+    public function __construct(Conexion $conexion)
     {
         $this->conexion = $conexion;
     }
@@ -22,6 +22,6 @@ class UsuarioRepo{
 
         $consulta->execute([$numeroCuenta]);
 
-        return $consulta->fetch(PDO::FETCH_ASSOC);
+        return $consulta->fetch(Conexion::FETCH_ASSOC);
     }
 }
