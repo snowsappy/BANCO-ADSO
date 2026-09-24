@@ -9,7 +9,8 @@
 
     <h1>Iniciar sesión</h1>
 
-    <form method="POST" action="../public/index.php">
+    <form method="POST" action="index.php">
+        <input type="hidden" name="action" value="login">
 
         <label>Número de cuenta:</label>
         <input type="text" name="numero_cuenta" required>

@@ -6,17 +6,25 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Controladores\\CuentaControlador' => $baseDir . '/src/controllers/cuentaControlador.php',
+    'App\\Controladores\\CuentaControlador' => $baseDir . '/src/controllers/CuentaControlador.php',
+    'App\\Controladores\\RetiroControlador' => $baseDir . '/src/controllers/RetiroControlador.php',
     'App\\Controladores\\SesionControlador' => $baseDir . '/src/controllers/iniciosesion.php',
+    'App\\Controladores\\TransferenciaControlador' => $baseDir . '/src/controllers/TransferenciaControlador.php',
     'App\\Core\\Conexion' => $baseDir . '/src/core/Conexion.php',
     'App\\Models\\Clientes\\Clientes' => $baseDir . '/src/Models/Clientes.php',
     'App\\Models\\Cuentas\\Cuentas' => $baseDir . '/src/Models/Cuentas.php',
     'App\\Models\\Retiros\\Retiros' => $baseDir . '/src/Models/Retiros.php',
     'App\\Models\\Transferencias\\Transferencias' => $baseDir . '/src/Models/Transferencias.php',
     'App\\Models\\Usuarios' => $baseDir . '/src/Models/Usuarios.php',
-    'App\\Repositories\\UsuarioRepo' => $baseDir . '/src/repositories/usuariorepo.php',
+    'App\\Repositories\\CuentaRepo' => $baseDir . '/src/repositories/CuentaRepo.php',
+    'App\\Repositories\\RetiroRepo' => $baseDir . '/src/repositories/RetiroRepo.php',
+    'App\\Repositories\\TransferenciaRepo' => $baseDir . '/src/repositories/TransferenciaRepo.php',
+    'App\\Repositories\\UsuarioRepo' => $baseDir . '/src/repositories/UsuarioRepo.php',
     'App\\Repositorios\\CuentaRepositorio' => $baseDir . '/src/repositories/cuentarepositorio.php',
     'App\\Services\\UsuarioServicio' => $baseDir . '/src/services/Usuarioservi.php',
-    'App\\Servicios\\CuentaServicio' => $baseDir . '/src/services/cuentaservicio.php',
+    'App\\Servicios\\CuentaServicio' => $baseDir . '/src/servicios/CuentaServicio.php',
+    'App\\Servicios\\RetiroServicio' => $baseDir . '/src/servicios/RetiroServicio.php',
+    'App\\Servicios\\TransferenciaServicio' => $baseDir . '/src/servicios/TransferenciaServicio.php',
+    'App\\Servicios\\UsuarioServicio' => $baseDir . '/src/servicios/UsuarioServicio.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );

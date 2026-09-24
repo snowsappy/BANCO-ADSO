@@ -8,28 +8,43 @@ class SesionControlador
 {
     private UsuarioServicio $servicio;
 
-    public function __construct(UsuarioServicio $servicio)
-    {
+    public function __construct(
+        UsuarioServicio $servicio
+    ) {
         $this->servicio = $servicio;
     }
 
-    public function iniciar()
+    public function iniciar(): void
     {
-        $numeroCuenta = $_POST['numero_cuenta'];
-        $clave = $_POST['clave'];
+        $numeroCuenta = trim((string) ($_POST['numero_cuenta'] ?? ''));
+        $clave = (string) ($_POST['clave'] ?? '');
 
-        $usuario = $this->servicio->iniciarSesion($numeroCuenta, $clave);
+        if ($numeroCuenta === '' || $clave === '') {
+            echo "Debe ingresar el número de cuenta y la contraseña";
+            return;
+        }
+
+        $usuario = $this->servicio->iniciarSesion(
+            $numeroCuenta,
+            $clave
+        );
 
         if ($usuario === false) {
             echo "Número de cuenta o contraseña incorrectos";
             return;
         }
 
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
 
-        $_SESSION['usuario_id'] = $usuario['id'];
+        session_regenerate_id(true);
+
+        $_SESSION['usuario_id'] = (int) $usuario['id'];
+        $_SESSION['cuenta_id'] = (int) $usuario['cuenta_id'];
         $_SESSION['numero_cuenta'] = $usuario['numero_cuenta'];
 
-        echo "Sesión iniciada correctamente";
+        header('Location: index.php');
+        exit;
     }
 }

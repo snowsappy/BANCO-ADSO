@@ -138,7 +138,7 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cuenta_id` int DEFAULT NULL,
-  `clave_hash` varchar(10) DEFAULT NULL,
+  `clave_hash` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cuenta_id` (`cuenta_id`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`cuenta_id`) REFERENCES `cuentas` (`id`) ON DELETE RESTRICT
@@ -151,7 +151,12 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,2,'1234'),(2,1,'5678'),(3,5,'987'),(4,3,'4343'),(5,4,'1982');
+INSERT INTO `usuarios` VALUES
+  (1,2,'$2y$10$QphQjQjvY.nTqUwYqf.xeeZhL.4zpYChpk.nfiDmOA9JxV1H9V3He'),
+  (2,1,'$2y$10$2uIbT84VQvWcVo6bd12MyOcipdbHI3fH9WCiI.1RxBlQN.r/Xeyee'),
+  (3,5,'$2y$10$5qUXePt9asUrobsxBviBDe2c5nHyiDeq6QsUOAryv9y0p3i/QQnN2'),
+  (4,3,'$2y$10$U3GLQ.yg075Gm04TVJtyjuP2speUoSyGM1HrJP.1T5AR1.2t5kE4S'),
+  (5,4,'$2y$10$68hWbY6ocwYikcvsPE9MUul0dei7bxbZSzWWqhycze9Nc8Cc.xYK.');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

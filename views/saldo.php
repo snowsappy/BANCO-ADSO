@@ -1,53 +1,31 @@
-<?php
-
-function escapar(string $texto): string
-{
-    return htmlspecialchars(
-        $texto,
-        ENT_QUOTES,
-        'UTF-8'
-    );
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <title>Consultar saldo</title>
+    <title>Panel bancario</title>
 </head>
 
 <body>
 
-    <h1>Consultar saldo</h1>
+    <h1>Panel bancario</h1>
 
     <p>
-        Usuario:
-        <?= escapar($_SESSION['usuario_nombre']) ?>
+        <strong>Número de cuenta:</strong>
+        <?= htmlspecialchars($cuenta['numero_cuenta']) ?>
     </p>
 
-    <?php if (isset($mensaje)): ?>
+    <p>
+        <strong>Saldo disponible:</strong>
+        $<?= number_format((float) $cuenta['saldo'], 2) ?>
+    </p>
 
-        <p><?= escapar($mensaje) ?></p>
-
-    <?php else: ?>
-
-        <p>
-            Número de cuenta:
-            <?= escapar($cuenta['numero_cuenta']) ?>
-        </p>
-
-        <h2>
-            Saldo:
-            $<?= number_format((float) $cuenta['saldo'], 2, ',', '.') ?>
-        </h2>
-
-    <?php endif; ?>
-
-    <a href="/BancoADSO/views/panel.php">
-        Volver al panel
-    </a>
+    <nav>
+        <a href="index.php?action=retiro">Realizar retiro</a> |
+        <a href="index.php?action=transferencia">Realizar transferencia</a> |
+        <a href="index.php?action=historial_retiros">Historial de retiros</a> |
+        <a href="index.php?action=historial_transferencias">Historial de transferencias</a>
+    </nav>
 
 </body>
 

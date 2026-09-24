@@ -26,18 +26,26 @@ class ComposerStaticInit57e9856057328555e75c87922a3d5e9e
     );
 
     public static $classMap = array (
-        'App\\Controladores\\CuentaControlador' => __DIR__ . '/../..' . '/src/controllers/cuentaControlador.php',
+        'App\\Controladores\\CuentaControlador' => __DIR__ . '/../..' . '/src/controllers/CuentaControlador.php',
+        'App\\Controladores\\RetiroControlador' => __DIR__ . '/../..' . '/src/controllers/RetiroControlador.php',
         'App\\Controladores\\SesionControlador' => __DIR__ . '/../..' . '/src/controllers/iniciosesion.php',
+        'App\\Controladores\\TransferenciaControlador' => __DIR__ . '/../..' . '/src/controllers/TransferenciaControlador.php',
         'App\\Core\\Conexion' => __DIR__ . '/../..' . '/src/core/Conexion.php',
         'App\\Models\\Clientes\\Clientes' => __DIR__ . '/../..' . '/src/Models/Clientes.php',
         'App\\Models\\Cuentas\\Cuentas' => __DIR__ . '/../..' . '/src/Models/Cuentas.php',
         'App\\Models\\Retiros\\Retiros' => __DIR__ . '/../..' . '/src/Models/Retiros.php',
         'App\\Models\\Transferencias\\Transferencias' => __DIR__ . '/../..' . '/src/Models/Transferencias.php',
         'App\\Models\\Usuarios' => __DIR__ . '/../..' . '/src/Models/Usuarios.php',
-        'App\\Repositories\\UsuarioRepo' => __DIR__ . '/../..' . '/src/repositories/usuariorepo.php',
+        'App\\Repositories\\CuentaRepo' => __DIR__ . '/../..' . '/src/repositories/CuentaRepo.php',
+        'App\\Repositories\\RetiroRepo' => __DIR__ . '/../..' . '/src/repositories/RetiroRepo.php',
+        'App\\Repositories\\TransferenciaRepo' => __DIR__ . '/../..' . '/src/repositories/TransferenciaRepo.php',
+        'App\\Repositories\\UsuarioRepo' => __DIR__ . '/../..' . '/src/repositories/UsuarioRepo.php',
         'App\\Repositorios\\CuentaRepositorio' => __DIR__ . '/../..' . '/src/repositories/cuentarepositorio.php',
         'App\\Services\\UsuarioServicio' => __DIR__ . '/../..' . '/src/services/Usuarioservi.php',
-        'App\\Servicios\\CuentaServicio' => __DIR__ . '/../..' . '/src/services/cuentaservicio.php',
+        'App\\Servicios\\CuentaServicio' => __DIR__ . '/../..' . '/src/servicios/CuentaServicio.php',
+        'App\\Servicios\\RetiroServicio' => __DIR__ . '/../..' . '/src/servicios/RetiroServicio.php',
+        'App\\Servicios\\TransferenciaServicio' => __DIR__ . '/../..' . '/src/servicios/TransferenciaServicio.php',
+        'App\\Servicios\\UsuarioServicio' => __DIR__ . '/../..' . '/src/servicios/UsuarioServicio.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
