@@ -1,7 +1,7 @@
 <?php
+echo "funciona??????";
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -49,7 +49,7 @@ if ($accion === 'logout') {
         setcookie(
             session_name(),
             '',
-            time() - 42000,
+            time() - 60,
             $params['path'],
             $params['domain'],
             $params['secure'],

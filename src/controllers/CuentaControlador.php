@@ -33,6 +33,6 @@ class CuentaControlador
         }
 
         require __DIR__ .
-            '/../../views/panel.php';
+            '/../../views/saldo.php';
     }
 }

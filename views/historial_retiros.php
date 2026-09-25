@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial de retiros</title>
+    <title>Historial de retirots</title>
 </head>
 <body>
     <h1>Historial de retiros</h1>

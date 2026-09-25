@@ -23,7 +23,8 @@ class RetiroControlador
                     (string) ($_POST['clave'] ?? ''),
                     (string) ($_POST['valor'] ?? '')
                 );
-                $mensaje = 'Retiro realizado correctamente';
+                header('Location: index.php?action=historial_retiros');
+                exit;
             } catch (\DomainException $exception) {
                 $mensaje = $exception->getMessage();
             }
