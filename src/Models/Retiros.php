@@ -13,12 +13,12 @@ class Retiros{
     public function __construct(
         int $id,
         float $valor,
-        int $cuentaId,
+        int $cuenta_id,
         \DateTimeInterface|string $fecha
     ) {
         $this->id = $id;
         $this->valor = $valor;
-        $this->cuenta_id = $cuentaId;
+        $this->cuenta_id = $cuenta_id;
         $this->fecha = $fecha instanceof \DateTime
             ? $fecha
             : new \DateTime(

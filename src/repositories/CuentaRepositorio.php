@@ -15,7 +15,7 @@ class CuentaRepositorio
     }
 
     public function obtenerCuentaPorId(
-        int $cuentaId
+        int $cuenta_id
     ): Cuentas|false {
 
         $consulta = $this->conexion->prepare(
@@ -25,14 +25,14 @@ class CuentaRepositorio
         );
 
         $consulta->execute([
-            $cuentaId
+            $cuenta_id
         ]);
 
         return $this->hidratarCuenta($consulta->fetch(PDO::FETCH_ASSOC));
     }
 
     public function obtenerCuentaPorUsuario(
-        int $usuarioId
+        int $usuario_id
     ): Cuentas|false {
 
         $consulta = $this->conexion->prepare(
@@ -47,14 +47,14 @@ class CuentaRepositorio
         );
 
         $consulta->execute([
-            $usuarioId
+            $usuario_id
         ]);
 
         return $this->hidratarCuenta($consulta->fetch(PDO::FETCH_ASSOC));
     }
 
     public function obtenerCuentaPorNumero(
-        string $numeroCuenta
+        string $numero_cuenta
     ): Cuentas|false {
 
         $consulta = $this->conexion->prepare(
@@ -64,7 +64,7 @@ class CuentaRepositorio
         );
 
         $consulta->execute([
-            $numeroCuenta
+            $numero_cuenta
         ]);
 
         return $this->hidratarCuenta($consulta->fetch(PDO::FETCH_ASSOC));

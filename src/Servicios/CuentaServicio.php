@@ -15,18 +15,18 @@ class CuentaServicio
     }
 
     public function consultarSaldo(
-        int $cuentaId
+        int $cuenta_id
     ): Cuentas|false {
 
         return $this->repositorio
-            ->obtenerCuentaPorId($cuentaId);
+            ->obtenerCuentaPorId($cuenta_id);
     }
 
     public function buscarPorNumero(
-        string $numeroCuenta
+        string $numero_cuenta
     ): Cuentas|false {
 
         return $this->repositorio
-            ->obtenerCuentaPorNumero($numeroCuenta);
+            ->obtenerCuentaPorNumero($numero_cuenta);
     }
 }

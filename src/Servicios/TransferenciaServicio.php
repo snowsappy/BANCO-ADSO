@@ -22,43 +22,51 @@ class TransferenciaServicio
     }
 
     public function realizar(
-        int $usuarioId,
-        int $cuentaOrigenId,
+        int $usuario_id,
+        int $cuenta_origen_id,
         string $clave,
-        string $numeroDestino,
+        string $numero_destino,
         string $valor
     ): void {
-        $usuario = $this->usuarios->buscarPorId($usuarioId);
-        if ($usuario === false || !password_verify($clave, password_hash($usuario->getClave(), PASSWORD_DEFAULT))) {
-            echo('La contraseña de confirmación es incorrecta');
+        $usuario = $this->usuarios->buscarPorId($usuario_id);
+        if (
+            $usuario === false
+            || !password_verify($clave, $usuario->getClave())
+        ) {
+            throw new \DomainException('La contraseña de confirmación es incorrecta');
         }
 
-        if ($usuario->get_cuenta() !== $cuentaOrigenId) {
-            echo('La cuenta de la sesión no corresponde al usuario');
+        if ($usuario->get_cuenta() !== $cuenta_origen_id) {
+            throw new \DomainException('La cuenta de la sesión no corresponde al usuario');
         }
 
-        $destino = $this->cuentas->obtenerCuentaPorNumero(trim($numeroDestino));
+        $destino = $this->cuentas->obtenerCuentaPorNumero(trim($numero_destino));
         if ($destino === false) {
-            echo('La cuenta de destino no existe');
+            throw new \DomainException('La cuenta de destino no existe');
         }
-        if ($cuentaOrigenId === $destino->obtenerid()) {
-            echo('La cuenta destino debe ser diferente a la cuenta de origen');
+        if ($cuenta_origen_id === $destino->obtenerid()) {
+            throw new \DomainException('La cuenta destino debe ser diferente a la cuenta de origen');
         }
 
         $monto = trim($valor);
         if ($monto === '' || !is_numeric($monto) || (float) $monto <= 0) {
-            echo('El valor debe ser numérico y mayor que cero');
+            throw new \DomainException('El valor debe ser numérico y mayor que cero');
+        }
+
+        $monto = round((float) $monto, 2);
+        if ($monto <= 0) {
+            throw new \DomainException('El valor debe ser de al menos un centavo');
         }
 
         $this->transferencias->registrar(
-            $cuentaOrigenId,
+            $cuenta_origen_id,
             $destino->obtenerid(),
-            round((float) $monto, 2)
+            $monto
         );
     }
 
-    public function historial(int $cuentaId): array
+    public function historial(int $cuenta_id): array
     {
-        return $this->transferencias->historial($cuentaId);
+        return $this->transferencias->historial($cuenta_id);
     }
 }

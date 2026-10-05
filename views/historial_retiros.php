@@ -1,5 +1,5 @@
 <?php
-if (!isset($historial)) {
+if (!isset($historial) || !is_array($historial)) {
     header('Location: ../public/index.php?action=historial_retiros');
     exit;
 }
@@ -8,7 +8,7 @@ if (!isset($historial)) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial de retirots</title>
+    <title>Historial de retiros</title>
 </head>
 <body>
     <h1>Historial de retiros</h1>

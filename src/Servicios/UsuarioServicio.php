@@ -16,13 +16,13 @@ class UsuarioServicio
     }
 
     public function iniciarSesion(
-        string $numeroCuenta,
+        string $numero_cuenta,
         string $clave
     ): Usuarios|false {
 
         $usuario =
             $this->repositorio
-                ->buscarPorNumeroCuenta($numeroCuenta);
+                ->buscarPorNumeroCuenta($numero_cuenta);
 
         if ($usuario === false) {
             return false;
@@ -31,7 +31,7 @@ class UsuarioServicio
         if (
             !password_verify(
                 $clave,
-                password_hash($usuario->getClave(), PASSWORD_DEFAULT)
+                $usuario->getClave()
             )
         ) {
             return false;

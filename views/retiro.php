@@ -1,5 +1,5 @@
 <?php
-if (!isset($mensaje)) {
+if (!array_key_exists('mensaje', get_defined_vars())) {
     header('Location: ../public/index.php?action=retiro');
     exit;
 }

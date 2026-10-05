@@ -16,14 +16,14 @@ class Cuentas{
 
     public function __construct(
         int $id,
-        string $numeroCuenta,
+        string $numero_cuenta,
         float $saldo,
-        ?int $clienteId
+        ?int $cliente_id
     ) {
         $this->id = $id;
-        $this->numero_cuenta = $numeroCuenta;
+        $this->numero_cuenta = $numero_cuenta;
         $this->saldo = $saldo;
-        $this->cliente_id = $clienteId;
+        $this->cliente_id = $cliente_id;
     }
 
     public function obtenerid(){

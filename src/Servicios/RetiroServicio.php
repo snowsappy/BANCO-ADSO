@@ -19,25 +19,25 @@ class RetiroServicio
     }
 
     public function realizar(
-        int $usuarioId,
-        int $cuentaId,
+        int $usuario_id,
+        int $cuenta_id,
         string $clave,
         string $valor
     ): void
     {
-        $usuario = $this->usuarios->buscarPorId($usuarioId);
+        $usuario = $this->usuarios->buscarPorId($usuario_id);
         $this->validarClave($usuario, $clave);
-        if ($usuario->get_cuenta() !== $cuentaId) {
+        if ($usuario->get_cuenta() !== $cuenta_id) {
             echo('La cuenta de la sesión no corresponde al usuario');
         }
 
         $monto = $this->validarMonto($valor);
-        $this->retiros->registrar($cuentaId, $monto);
+        $this->retiros->registrar($cuenta_id, $monto);
     }
 
-    public function historial(int $cuentaId): array
+    public function historial(int $cuenta_id): array
     {
-        return $this->retiros->historial($cuentaId);
+        return $this->retiros->historial($cuenta_id);
     }
 
     private function validarClave(Usuarios|false $usuario, string $clave): void

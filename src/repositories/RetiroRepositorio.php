@@ -13,7 +13,7 @@ class RetiroRepositorio
         $this->conexion = $conexion;
     }
 
-    public function registrar(int $cuentaId, float $valor): void
+    public function registrar(int $cuenta_id, float $valor): void
     {
         $this->conexion->beginTransaction();
 
@@ -21,7 +21,7 @@ class RetiroRepositorio
             $consulta = $this->conexion->prepare(
                 'SELECT saldo FROM cuentas WHERE id = ? FOR UPDATE'
             );
-            $consulta->execute([$cuentaId]);
+            $consulta->execute([$cuenta_id]);
             $cuenta = $consulta->fetch(PDO::FETCH_ASSOC);
 
             if ($cuenta === false || (float) $cuenta['saldo'] < $valor) {
@@ -31,12 +31,12 @@ class RetiroRepositorio
             $actualizar = $this->conexion->prepare(
                 'UPDATE cuentas SET saldo = saldo - ? WHERE id = ?'
             );
-            $actualizar->execute([$valor, $cuentaId]);
+            $actualizar->execute([$valor, $cuenta_id]);
 
             $insertar = $this->conexion->prepare(
                 'INSERT INTO retiros (cuenta_id, valor, fecha) VALUES (?, ?, NOW())'
             );
-            $insertar->execute([$cuentaId, $valor]);
+            $insertar->execute([$cuenta_id, $valor]);
             $this->conexion->commit();
         } catch (\Throwable $exception) {
             if ($this->conexion->inTransaction()) {
@@ -46,19 +46,19 @@ class RetiroRepositorio
         }
     }
 
-    public function historial(int $cuentaId): array
+    public function historial(int $cuenta_id): array
     {
         $consulta = $this->conexion->prepare(
             'SELECT id, cuenta_id, valor, fecha FROM retiros
              WHERE cuenta_id = ? ORDER BY fecha DESC, id DESC'
         );
-        $consulta->execute([$cuentaId]);
+        $consulta->execute([$cuenta_id]);
 
         $resumen = $this->conexion->prepare(
             'SELECT COUNT(*) AS cantidad, COALESCE(SUM(valor), 0) AS total
              FROM retiros WHERE cuenta_id = ?'
         );
-        $resumen->execute([$cuentaId]);
+        $resumen->execute([$cuenta_id]);
         $datos = $resumen->fetch(PDO::FETCH_ASSOC);
 
         $movimientos = array_map(

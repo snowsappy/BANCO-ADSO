@@ -16,16 +16,16 @@ class UsuarioControlador
 
     public function iniciar(): void
     {
-        $numeroCuenta = trim((string) ($_POST['numero_cuenta'] ?? ''));
+        $numero_cuenta = trim((string) ($_POST['numero_cuenta'] ?? ''));
         $clave = (string) ($_POST['clave'] ?? '');
 
-        if ($numeroCuenta === '' || $clave === '') {
+        if ($numero_cuenta === '' || $clave === '') {
             echo "Debe ingresar el número de cuenta y la contraseña";
             return;
         }
 
         $usuario = $this->servicio->iniciarSesion(
-            $numeroCuenta,
+            $numero_cuenta,
             $clave
         );
 
@@ -42,7 +42,7 @@ class UsuarioControlador
 
         $_SESSION['usuario_id'] = $usuario->get_id();
         $_SESSION['cuenta_id'] = $usuario->get_cuenta();
-        $_SESSION['numero_cuenta'] = $numeroCuenta;
+        $_SESSION['numero_cuenta'] = $numero_cuenta;
 
         header('Location: index.php');
         exit;

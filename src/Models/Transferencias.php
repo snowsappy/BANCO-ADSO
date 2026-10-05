@@ -16,14 +16,14 @@ class Transferencias{
     public function __construct(
         int $id,
         float $valor,
-        int $cuentaOrigenId,
-        int $cuentaDestinoId,
+        int $cuenta_origen_id,
+        int $cuenta_destino_id,
         \DateTimeInterface|string $fecha
     ) {
         $this->id = $id;
         $this->valor = $valor;
-        $this->cuenta_origen_id = $cuentaOrigenId;
-        $this->cuenta_destino_id = $cuentaDestinoId;
+        $this->cuenta_origen_id = $cuenta_origen_id;
+        $this->cuenta_destino_id = $cuenta_destino_id;
         $this->fecha = $fecha instanceof \DateTime
             ? $fecha
             : new \DateTime(

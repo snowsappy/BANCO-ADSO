@@ -16,18 +16,18 @@ class CuentaControlador
     public function mostrarPanel(): void
     {
         if (!isset($_SESSION['cuenta_id'])) {
-            header('Location: index.php');
-            exit;
+            http_response_code(401);
+            exit('Inicie sesión para consultar el panel');
         }
 
         
-        $cuentaId =
+        $cuenta_id =
             (int) $_SESSION['cuenta_id'];
 
 
         $cuenta =
             $this->servicio
-                ->consultarSaldo($cuentaId);
+                ->consultarSaldo($cuenta_id);
 
         if ($cuenta === false) {
             http_response_code(404);

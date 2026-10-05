@@ -15,7 +15,7 @@ class UsuarioRepositorio
     }
 
     public function buscarPorNumeroCuenta(
-        string $numeroCuenta
+        string $numero_cuenta
     ): Usuarios|false {
 
         $sql = "SELECT
@@ -30,7 +30,7 @@ class UsuarioRepositorio
         $consulta = $this->conexion->prepare($sql);
 
         $consulta->execute([
-            $numeroCuenta
+            $numero_cuenta
         ]);
 
         $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ class UsuarioRepositorio
     }
 
     public function buscarPorId(
-        int $usuarioId
+        int $usuario_id
     ): Usuarios|false {
 
         $sql = "SELECT
@@ -60,7 +60,7 @@ class UsuarioRepositorio
         $consulta = $this->conexion->prepare($sql);
 
         $consulta->execute([
-            $usuarioId
+            $usuario_id
         ]);
 
         $usuario = $consulta->fetch(PDO::FETCH_ASSOC);

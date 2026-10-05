@@ -14,12 +14,12 @@ class TransferenciaRepositorio
         $this->conexion = $conexion;
     }
 
-    public function registrar(int $origenId, int $destinoId, float $valor): void
+    public function registrar(int $origen_id, int $destino_id, float $valor): void
     {
         $this->conexion->beginTransaction();
 
         try {
-            $ids = [$origenId, $destinoId];
+            $ids = [$origen_id, $destino_id];
             sort($ids);
             $bloquear = $this->conexion->prepare(
                 'SELECT id, numero_cuenta, saldo, cliente_id FROM cuentas
@@ -44,25 +44,25 @@ class TransferenciaRepositorio
             foreach ($cuentas as $cuenta) {
                 $saldos[$cuenta->obtenerid()] = $cuenta->obtenerSaldo();
             }
-            if ($saldos[$origenId] < $valor) {
+            if ($saldos[$origen_id] < $valor) {
                 throw new \DomainException('Saldo insuficiente para realizar la transferencia');
             }
 
             $actualizar = $this->conexion->prepare(
                 'UPDATE cuentas SET saldo = saldo - ? WHERE id = ?'
             );
-            $actualizar->execute([$valor, $origenId]);
+            $actualizar->execute([$valor, $origen_id]);
             $actualizar = $this->conexion->prepare(
                 'UPDATE cuentas SET saldo = saldo + ? WHERE id = ?'
             );
-            $actualizar->execute([$valor, $destinoId]);
+            $actualizar->execute([$valor, $destino_id]);
 
             $insertar = $this->conexion->prepare(
                 'INSERT INTO transferencias
                  (cuenta_origen_id, cuenta_destino_id, valor, fecha)
                  VALUES (?, ?, ?, NOW())'
             );
-            $insertar->execute([$origenId, $destinoId, $valor]);
+            $insertar->execute([$origen_id, $destino_id, $valor]);
             $this->conexion->commit();
         } catch (\Throwable $exception) {
             if ($this->conexion->inTransaction()) {
@@ -72,59 +72,63 @@ class TransferenciaRepositorio
         }
     }
 
-    public function historial(int $cuentaId): array
+    public function historial(int $cuenta_id): array
     {
         $consulta = $this->conexion->prepare(
             'SELECT t.id, t.valor, t.cuenta_origen_id, t.cuenta_destino_id,
-                    t.fecha, \'Enviada\' AS tipo,
-                    destino.numero_cuenta AS cuenta_relacionada
-             FROM transferencias t
-             INNER JOIN cuentas destino ON destino.id = t.cuenta_destino_id
-             WHERE t.cuenta_origen_id = ?
-             UNION ALL
-             SELECT t.id, t.valor, t.cuenta_origen_id, t.cuenta_destino_id,
-                    t.fecha, \'Recibida\' AS tipo,
-                    origen.numero_cuenta AS cuenta_relacionada
-             FROM transferencias t
+                    t.fecha,
+                    CASE WHEN t.cuenta_origen_id = cuenta_actual.id
+                         THEN \'Enviada\' ELSE \'Recibida\' END AS tipo,
+                    CASE WHEN t.cuenta_origen_id = cuenta_actual.id
+                         THEN destino.numero_cuenta ELSE origen.numero_cuenta
+                    END AS cuenta_relacionada
+             FROM cuentas cuenta_actual
+             INNER JOIN transferencias t
+                ON t.cuenta_origen_id = cuenta_actual.id
+                OR t.cuenta_destino_id = cuenta_actual.id
              INNER JOIN cuentas origen ON origen.id = t.cuenta_origen_id
-             WHERE t.cuenta_destino_id = ?
-             ORDER BY fecha DESC, id DESC'
+             INNER JOIN cuentas destino ON destino.id = t.cuenta_destino_id
+             WHERE cuenta_actual.id = ?
+             ORDER BY t.fecha DESC, t.id DESC'
         );
-        $consulta->execute([$cuentaId, $cuentaId]);
+        $consulta->execute([$cuenta_id]);
 
-        $resumen = $this->conexion->prepare(
-            'SELECT
-                SUM(CASE WHEN cuenta_origen_id = ? THEN 1 ELSE 0 END) AS enviadas,
-                COALESCE(SUM(CASE WHEN cuenta_origen_id = ? THEN valor ELSE 0 END), 0) AS total_enviado,
-                SUM(CASE WHEN cuenta_destino_id = ? THEN 1 ELSE 0 END) AS recibidas,
-                COALESCE(SUM(CASE WHEN cuenta_destino_id = ? THEN valor ELSE 0 END), 0) AS total_recibido
-             FROM transferencias
-             WHERE cuenta_origen_id = ? OR cuenta_destino_id = ?'
-        );
-        $resumen->execute([$cuentaId, $cuentaId, $cuentaId, $cuentaId, $cuentaId, $cuentaId]);
-        $datos = $resumen->fetch(PDO::FETCH_ASSOC);
+        $movimientos = [];
+        $enviadas = 0;
+        $total_enviado_centavos = 0;
+        $recibidas = 0;
+        $total_recibido_centavos = 0;
 
-        $movimientos = array_map(
-            static fn (array $fila): array => [
+        foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $fila) {
+            $valor = (float) $fila['valor'];
+            $valor_centavos = (int) round($valor * 100);
+            if ($fila['tipo'] === 'Enviada') {
+                $enviadas++;
+                $total_enviado_centavos += $valor_centavos;
+            } else {
+                $recibidas++;
+                $total_recibido_centavos += $valor_centavos;
+            }
+
+            $movimientos[] = [
                 'transferencia' => new Transferencias(
                     (int) $fila['id'],
-                    (float) $fila['valor'],
+                    $valor,
                     (int) $fila['cuenta_origen_id'],
                     (int) $fila['cuenta_destino_id'],
                     $fila['fecha']
                 ),
                 'tipo' => $fila['tipo'],
                 'cuenta_relacionada' => $fila['cuenta_relacionada'],
-            ],
-            $consulta->fetchAll(PDO::FETCH_ASSOC)
-        );
+            ];
+        }
 
         return [
             'movimientos' => $movimientos,
-            'enviadas' => (int) ($datos['enviadas'] ?? 0),
-            'total_enviado' => (float) ($datos['total_enviado'] ?? 0),
-            'recibidas' => (int) ($datos['recibidas'] ?? 0),
-            'total_recibido' => (float) ($datos['total_recibido'] ?? 0),
+            'enviadas' => $enviadas,
+            'total_enviado' => $total_enviado_centavos / 100,
+            'recibidas' => $recibidas,
+            'total_recibido' => $total_recibido_centavos / 100,
         ];
     }
 }
